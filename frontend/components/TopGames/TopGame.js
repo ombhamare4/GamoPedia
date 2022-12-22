@@ -26,7 +26,7 @@ const TopGame = () => {
                   style={style.image}
                   // className="absolute inset-0"
                   // source={require(""+item.background_image)}
-                  source={{ uri: item.background_image }}
+                 source={{ uri: item.background_image }}
                 />
 
                 <Text className="absolute inset-x-0 bottom-0 text-white text-center p-5 text-lg ">

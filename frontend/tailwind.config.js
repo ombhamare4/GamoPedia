@@ -4,7 +4,11 @@ module.exports = {
     './App.{js,jsx,ts,tsx}',
     // './<custom directory>/**/*.{js,jsx,ts,tsx}',
     './pages/Home.{js,jsx,ts,tsx}',
+    './pages/Account.{js,jsx,ts,tsx}',
     './components/TopGames/TopGame.{js,jsx,ts,tsx}',
+    './components/Account/SignIn.{js,jsx,ts,tsx}',
+    './components/Account/SignUp.{js,jsx,ts,tsx}',
+
   ],
   theme: {
     colors: {
