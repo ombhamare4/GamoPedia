@@ -1,5 +1,6 @@
 from ariadne.asgi import GraphQL
 from ariadne import ObjectType, QueryType, gql, make_executable_schema
+from starlette.middleware.cors import CORSMiddleware
 import json
 import requests
 import os
@@ -164,10 +165,20 @@ type_defs = gql("""
         image_background: String
     }
 
+    type Genre {
+        id: ID
+        name: String
+        slug: String
+        games_count: Int
+        image_background:  String
+        games: [Game]
+    }
+
     type Query {
         hello: String!
         games: [Game]
         game_by_id(game_pk:String!): Game!
+        genres: [Genre]
     }
 """)
 
@@ -199,6 +210,14 @@ def resolve_games_by_id(_, info, game_pk):
     result = parse_json
     return result
 
+@query_type.field("genres")
+def resolve_genres(*_):
+    response_API = requests.get('https://api.rawg.io/api/genres?key={}'.format(api_key))
+    data = response_API.text
+    parse_json = json.loads(data)
+    result = parse_json['results']
+    # print(result)
+    return result
 
 schema = make_executable_schema(type_defs, query_type)
-app = GraphQL(schema, debug=True)
+app = CORSMiddleware(GraphQL(schema, debug=True),allow_origins=['*'], allow_methods=("GET", "POST", "OPTIONS"))
